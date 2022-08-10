@@ -1221,20 +1221,20 @@ public class pnl_datos extends javax.swing.JPanel {
         alertas.WarningAlert w = new alertas.WarningAlert(new JFrame(), true);
         if (nombre_tabla.equals("tabla_area")) {
             w.msj1.setText("Se eliminara el dato de nombre (" + nombre + "),");
-            w.msj2.setText("su responsable de área, unidad y responsable de unidad");
-            w.msj3.setText("correspondientes de manera permanente del sistema.");
+            w.msj2.setText("todos los responsables de area vinculados a esta area");
+            w.msj3.setText("también se eliminaran de manera permanente del sistema.");
         } else if (nombre_tabla.equals("tabla_resp_area")) {
             w.msj1.setText("Se eliminara el dato de nombre (" + nombre + "),");
-            w.msj2.setText("su área, unidad y responsable de unidad");
-            w.msj3.setText("correspondientes de manera permanente del sistema.");
+            w.msj2.setText("de manera permanente del sistema.");
+            w.msj3.setText("");
         } else if (nombre_tabla.equals("tabla_unidad")) {
             w.msj1.setText("Se eliminara el dato de nombre (" + nombre + "),");
-            w.msj2.setText("su responsable de área, área y responsable de unidad");
-            w.msj3.setText("correspondientes de manera permanente del sistema.");
+            w.msj2.setText("todos los responsables de unidad vinculados a esta unidad");
+            w.msj3.setText("seran eliminado de manera permanente del sistema.");
         } else if (nombre_tabla.equals("tabla_resp_unidad")) {
             w.msj1.setText("Se eliminara el dato de nombre (" + nombre + "),");
-            w.msj2.setText("su responsable de área, área y unidad");
-            w.msj3.setText("correspondientes de manera permanente del sistema.");
+            w.msj2.setText("de manera permanente del sistema.");
+            w.msj3.setText("");
         } else {
             w.msj1.setText("Se eliminara el dato de");
             w.msj2.setText("nombre (" + nombre + ")");
@@ -1243,36 +1243,32 @@ public class pnl_datos extends javax.swing.JPanel {
         w.setVisible(true);
         if (w.hecho) {
             int control = 0;
-            try {
-                if (nombre_tabla.equals("tabla_area") || nombre_tabla.equals("tabla_resp_area")) {
-                    if (nombre_tabla.equals("tabla_area")) {
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", columna, nombre);
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", columna, nombre);
-                    }
-                    if (nombre_tabla.equals("tabla_resp_area")) {
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "area", opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_area where resp_area='" + nombre + "'"));
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", columna, nombre);
-                    }
-                } else if (nombre_tabla.equals("tabla_unidad") || nombre_tabla.equals("tabla_resp_unidad")) {
-                    if (nombre_tabla.equals("tabla_unidad")) {
-                        String nombre_area =opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_unidad where unidad='" + nombre + "'");
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", "area", nombre_area );
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "area", nombre_area);
-                    }
-                    if (nombre_tabla.equals("tabla_resp_unidad")) {
-                        String nombre_area=opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_unidad where resp_unidad='" + nombre + "'");
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", "area", nombre_area);
-                        control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "area", nombre_area);
-                    }
-                    control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", columna, nombre);
-                } else {
-                    System.out.println("tabla " + nombre_tabla);
-                    System.out.println("columna " + columna);
-                    System.out.println("nombre " + nombre);
-                    control = opciones_de_gestionar_datos_cargados.eliminar_dato(tabla_bd, columna, nombre);
+            if (nombre_tabla.equals("tabla_area") || nombre_tabla.equals("tabla_resp_area")) {
+                if (nombre_tabla.equals("tabla_area")) {
+                    control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", columna, nombre);
+                    // control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", columna, nombre);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(pnl_datos.class.getName()).log(Level.SEVERE, null, ex);
+                if (nombre_tabla.equals("tabla_resp_area")) {
+                    // control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "area", opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_area where resp_area='" + nombre + "'"));
+                    control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", columna, nombre);
+                }
+            } else if (nombre_tabla.equals("tabla_unidad") || nombre_tabla.equals("tabla_resp_unidad")) {
+                if (nombre_tabla.equals("tabla_unidad")) {
+                    //String nombre_area =opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_unidad where unidad='" + nombre + "'");
+                    //control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", "area", nombre_area );
+                    control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "area", nombre);
+                }
+                if (nombre_tabla.equals("tabla_resp_unidad")) {
+                    // String nombre_area=opciones_de_gestionar_datos_cargados.extraer_valor("select area from lista_unidad where resp_unidad='" + nombre + "'");
+                    // control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_area", "area", nombre_area);
+                    control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", "resp_unidad", nombre);
+                }
+                control += opciones_de_gestionar_datos_cargados.eliminar_dato("lista_unidad", columna, nombre);
+            } else {
+                System.out.println("tabla " + nombre_tabla);
+                System.out.println("columna " + columna);
+                System.out.println("nombre " + nombre);
+                control = opciones_de_gestionar_datos_cargados.eliminar_dato(tabla_bd, columna, nombre);
             }
 //                control=opciones_de_gestionar_datos_cargados.eliminar_dato(tabla_bd,columna,nombre);
             if (nombre_tabla.equals("tabla_area") || nombre_tabla.equals("tabla_resp_area") || nombre_tabla.equals("tabla_unidad") || nombre_tabla.equals("tabla_resp_unidad")) {
