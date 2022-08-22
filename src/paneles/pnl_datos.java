@@ -942,7 +942,7 @@ public class pnl_datos extends javax.swing.JPanel {
         opciones_de_gestionar_datos_cargados.setListar(tabla_estado_expediente, "lista_estado_expediente", "select * from lista_estado_expediente");
         opciones_de_gestionar_datos_cargados.setListar(tabla_materia, "lista_materia", "select * from lista_materia");
         opciones_de_gestionar_datos_cargados.setListar(tabla_prioridad, "lista_prioridad", "select * from lista_prioridad");
-        opciones_de_gestionar_datos_cargados.setListar(tabla_procedimiento, "lista_procedimiento", "select * from lista_materia");
+        opciones_de_gestionar_datos_cargados.setListar(tabla_procedimiento, "lista_procedimiento", "select * from lista_procedimiento");
         opciones_de_gestionar_datos_cargados.setListar(tabla_promotor, "lista_promotor", "select * from lista_promotor");
         opciones_de_gestionar_datos_cargados.setListar2Columnas(tabla_resp_area, "lista_area", "select resp_area, area from lista_area");
         opciones_de_gestionar_datos_cargados.setListar2Columnas(tabla_resp_unidad, "lista_unidad", "select resp_unidad, unidad from lista_unidad group by resp_unidad, unidad order by resp_unidad");

@@ -484,15 +484,12 @@ private int PosicionMouse;
                     
                 try {
                     opciones_tabla_general.actualizar_pendiente(valor,id, tabla);
-                    System.out.println("excel valor verdadero "+tabla_general.getValueAt(0, 47).toString());
-                    System.out.println("excel valor mentira "+tabla_general.getValueAt(1, 47).toString());
                     ArrayList<Integer> excel_array = new ArrayList();
                     for(int i=0;i<tabla_general.getRowCount();i++){
                         if(tabla_general.getValueAt(i, 47).toString().equals("true")){
                             excel_array.add(i);
                         }
                     }
-                    System.out.println("arreglo "+excel_array.toString());
                      DefaultTableModel modelo = (DefaultTableModel) pnlHome.tabla_general.getModel();
                      while (modelo.getRowCount() > 0) {
                         modelo.removeRow(0);
